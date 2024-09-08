@@ -2,12 +2,15 @@ package com.samarth.myDiary.controller;
 
 import com.samarth.myDiary.entity.DiaryEntry;
 import com.samarth.myDiary.entity.User;
+import com.samarth.myDiary.repository.UserRepo;
 import com.samarth.myDiary.service.DiaryEntryService;
 import com.samarth.myDiary.service.UserService;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -19,24 +22,26 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping
-    public List<User> getAllUsers(){
-        return userService.getAll();
-    }
+    @Autowired
+    private UserRepo userRepo;
 
-    @PostMapping
-    public void createUser(@RequestBody User user){
-        userService.saveEntry(user);
-    }
-
-    @PutMapping("/{username}")
-    public ResponseEntity<?> updateUser(@RequestBody User user, @PathVariable String username){
+    @PutMapping
+    public ResponseEntity<?> updateUser(@RequestBody User user){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = auth.getName();
         User userInDB = userService.findByUsername(username);
-        if(userInDB!=null){
-            userInDB.setUsername(user.getUsername());
-            userInDB.setPassword(user.getPassword());
-            userService.saveEntry(userInDB);
-        }
+
+        userInDB.setUsername(user.getUsername());
+        userInDB.setPassword(user.getPassword());
+        userService.saveEntry(userInDB);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteUserById(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        userRepo.deleteByUserName(auth.getName());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

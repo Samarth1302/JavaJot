@@ -27,4 +27,5 @@ public class User {
     private String password;
     @DBRef //referring diary_entries to users
     private List<DiaryEntry> diaryEntries=new ArrayList<>();
+    private List<String> roles;
 }
