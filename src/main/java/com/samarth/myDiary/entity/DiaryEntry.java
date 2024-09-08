@@ -11,6 +11,7 @@ import java.util.Date;
 
 @Document(collection = "diary_entries")
 @Data //lombok adding getters, setters etc. during compilation no need of explicit
+@NoArgsConstructor
 public class DiaryEntry {
     @Id
     private ObjectId id;

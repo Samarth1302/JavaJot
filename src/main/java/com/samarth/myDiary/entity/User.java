@@ -1,6 +1,7 @@
 package com.samarth.myDiary.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
@@ -15,6 +16,7 @@ import java.util.RandomAccess;
 
 @Document(collection = "users")
 @Data //lombok adding getters, setters etc. during compilation no need of explicit
+@NoArgsConstructor
 public class User {
     @Id
     private ObjectId id;
