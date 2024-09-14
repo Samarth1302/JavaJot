@@ -1,20 +1,14 @@
 package com.samarth.myDiary.controller;
 
-import com.samarth.myDiary.entity.DiaryEntry;
 import com.samarth.myDiary.entity.User;
 import com.samarth.myDiary.repository.UserRepo;
-import com.samarth.myDiary.service.DiaryEntryService;
 import com.samarth.myDiary.service.UserService;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
-import java.util.*;
 
 @RestController
 @RequestMapping("/user")
@@ -33,7 +27,7 @@ public class UserController {
 
         userInDB.setUsername(user.getUsername());
         userInDB.setPassword(user.getPassword());
-        userService.saveEntry(userInDB);
+        userService.saveUser(userInDB);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -41,7 +35,7 @@ public class UserController {
     @DeleteMapping
     public ResponseEntity<?> deleteUserById(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        userRepo.deleteByUserName(auth.getName());
+        userRepo.deleteByUsername(auth.getName());
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

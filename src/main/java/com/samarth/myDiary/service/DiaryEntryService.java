@@ -28,7 +28,7 @@ public class DiaryEntryService {
             diaryEntry.setDate(LocalDateTime.now());
             DiaryEntry saved = diaryEntryRepo.save(diaryEntry);
             myUser.getDiaryEntries().add(saved);
-            userService.saveEntry(myUser);
+            userService.saveUser(myUser);
         }catch (Exception e){
             throw new RuntimeException("An error occurred while saving entry:",e);
         }
@@ -45,11 +45,19 @@ public class DiaryEntryService {
         return diaryEntryRepo.findById(id);
     }
 
-    public void deleteById(ObjectId id, String username){
-        User myUser = userService.findByUsername(username);
-        myUser.getDiaryEntries().removeIf((x -> x.getId().equals(id)));
-        userService.saveEntry(myUser);
-        diaryEntryRepo.deleteById(id);
+    @Transactional
+    public boolean deleteById(ObjectId id, String username){
+        boolean removed = false;
+        try{
+            User myUser = userService.findByUsername(username);
+            removed = myUser.getDiaryEntries().removeIf((x -> x.getId().equals(id)));
+            if(removed){
+                userService.saveUser(myUser);
+                diaryEntryRepo.deleteById(id);
+            }
+        }catch (Exception e){
+            throw new RuntimeException("An error occurred while deleting the entry",e);
+        }
+        return removed;
     }
-
 }
