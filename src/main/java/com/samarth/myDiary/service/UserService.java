@@ -25,6 +25,11 @@ public class UserService {
         user.setRoles(Arrays.asList("USER"));
         userRepo.save(user);
     }
+    public void saveAdmin(User user){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(Arrays.asList("USER","ADMIN"));
+        userRepo.save(user);
+    }
     public void saveUser(User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(user);
