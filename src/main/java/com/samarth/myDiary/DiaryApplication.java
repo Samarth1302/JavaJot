@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @EnableTransactionManagement
-public class MyDiaryApplication {
+public class DiaryApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MyDiaryApplication.class, args);
+		SpringApplication.run(DiaryApplication.class, args);
 	}
 
 	@Bean
