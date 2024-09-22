@@ -4,9 +4,13 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-!**/src/main/resources/application.yml
-!**/src/main/resources/application-prod.yml
-!**/src/main/resources/application-dev.yml
+# Ignore all files in src/main/resources
+src/main/resources/*
+
+# Specifically ignore YAML files
+src/main/resources/application.yml
+src/main/resources/application-prod.yml
+src/main/resources/application-dev.yml
 
 ### STS ###
 .apt_generated
