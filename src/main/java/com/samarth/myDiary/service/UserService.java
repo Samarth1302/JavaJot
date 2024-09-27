@@ -3,6 +3,8 @@ package com.samarth.myDiary.service;
 import com.samarth.myDiary.entity.User;
 import com.samarth.myDiary.repository.UserRepo;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +19,8 @@ public class UserService {
 
     @Autowired
     private UserRepo userRepo;
+
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     private static final PasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
 

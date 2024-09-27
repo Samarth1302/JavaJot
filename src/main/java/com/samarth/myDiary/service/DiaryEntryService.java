@@ -4,6 +4,8 @@ import com.samarth.myDiary.entity.DiaryEntry;
 import com.samarth.myDiary.entity.User;
 import com.samarth.myDiary.repository.DiaryEntryRepo;
 import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +23,8 @@ public class DiaryEntryService {
     @Autowired
     private UserService userService;
 
+    private static final Logger logger = LoggerFactory.getLogger(DiaryEntryService.class);
+
     @Transactional
     public void saveEntry(DiaryEntry diaryEntry, String username){
         try {
@@ -30,6 +34,7 @@ public class DiaryEntryService {
             myUser.getDiaryEntries().add(saved);
             userService.saveUser(myUser);
         }catch (Exception e){
+            logger.info("logging");
             throw new RuntimeException("An error occurred while saving entry:",e);
         }
     }
