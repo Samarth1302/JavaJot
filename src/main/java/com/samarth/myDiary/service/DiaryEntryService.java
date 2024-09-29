@@ -23,7 +23,7 @@ public class DiaryEntryService {
     @Autowired
     private UserService userService;
 
-    private static final Logger logger = LoggerFactory.getLogger(DiaryEntryService.class);
+//    private static final Logger logger = LoggerFactory.getLogger(DiaryEntryService.class);
 
     @Transactional
     public void saveEntry(DiaryEntry diaryEntry, String username){
@@ -34,7 +34,6 @@ public class DiaryEntryService {
             myUser.getDiaryEntries().add(saved);
             userService.saveUser(myUser);
         }catch (Exception e){
-            logger.info("logging");
             throw new RuntimeException("An error occurred while saving entry:",e);
         }
     }

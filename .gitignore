@@ -5,13 +5,8 @@ target/
 !**/src/test/**/target/
 
 # Ignore all files in src/main/resources
-src/main/resources/*
-
-# Specifically ignore YAML files
-src/main/resources/application.yml
-src/main/resources/application-prod.yml
-src/main/resources/application-dev.yml
-
+*.yml
+*.log
 ### STS ###
 .apt_generated
 .classpath

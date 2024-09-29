@@ -20,7 +20,7 @@ public class UserService {
     @Autowired
     private UserRepo userRepo;
 
-    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+//    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
     private static final PasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
 
