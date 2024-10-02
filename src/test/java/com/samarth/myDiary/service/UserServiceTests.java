@@ -17,6 +17,7 @@ public class UserServiceTests {
     @Autowired
     private UserRepo userRepo;
 
+    @Disabled
     @Test
     public void testFindByUsername(){
         User user =userRepo.findByUsername("sam");

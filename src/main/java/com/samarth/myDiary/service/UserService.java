@@ -27,14 +27,12 @@ public class UserService {
     public void saveNewUser(User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(Arrays.asList("USER"));
-        user.setEmail("abc@gmail.com");
         user.setSentimentAnalysis(true);
         userRepo.save(user);
     }
     public void saveAdmin(User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(Arrays.asList("USER","ADMIN"));
-        user.setEmail("abc@gmail.com");
         user.setSentimentAnalysis(true);
         userRepo.save(user);
     }
