@@ -1,5 +1,6 @@
 package com.samarth.myDiary.controller;
 
+import com.samarth.myDiary.cache.AppCache;
 import com.samarth.myDiary.entity.User;
 import com.samarth.myDiary.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,9 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AppCache appCache;
+
     @GetMapping("/allUsers")
     public ResponseEntity<?> getAllUsers(){
         List<User> all=userService.getAll();
@@ -28,5 +32,10 @@ public class AdminController {
     @PostMapping("/createAdmin")
     public void createAdminUser(@RequestBody User user){
         userService.saveAdmin(user);
+    }
+
+    @GetMapping("clear-app-cache")
+    public void clearAppCache(){
+        appCache.init();
     }
 }

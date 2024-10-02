@@ -1,6 +1,5 @@
 package com.samarth.myDiary.entity;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -10,25 +9,13 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.RandomAccess;
 
-@Document(collection = "users")
+@Document(collection = "config_diary_app")
 @Data //lombok adding getters, setters etc. during compilation no need of explicit
 @NoArgsConstructor
-public class User {
-    @Id
-    private ObjectId id;
-    @Indexed(unique = true)
-    @NonNull
-    private String username;
-    private String email;
-    private boolean sentimentAnalysis;
-    @NonNull //lombok OP NUll exception checking
-    private String password;
-    @DBRef //referring diary_entries to users
-    private List<DiaryEntry> diaryEntries=new ArrayList<>();
-    private List<String> roles;
+public class ConfigDiaryAppEntity {
+    private String key;
+    private String value;
 }
