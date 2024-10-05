@@ -1,6 +1,8 @@
 package com.samarth.myDiary.config;
 
+import com.samarth.myDiary.filter.JwtFilter;
 import com.samarth.myDiary.service.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,11 +12,15 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 @Configuration
 @EnableWebSecurity
 public class SpringSecurity {
+
+    @Autowired
+    private JwtFilter jwtFilter;
 
     private final UserDetailsServiceImpl userDetailsService;
 
@@ -29,9 +35,7 @@ public class SpringSecurity {
                         .antMatchers("/diary/**", "/user/**").authenticated()
                         .antMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
-                .httpBasic()
-                .and()
-                .csrf().disable()
+                .csrf().disable().addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

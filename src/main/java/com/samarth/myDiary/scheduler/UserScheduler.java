@@ -54,9 +54,9 @@ public class UserScheduler {
         }
     }
 
-    @Scheduled(cron = "0 0/10 * ? * *")
-    public void refreshCache(){
-        appCache.init();
-    }
+//    @Scheduled(cron = "0 0/10 * ? * *")
+//    public void refreshCache(){
+//        appCache.init();
+//    }
 
 }
