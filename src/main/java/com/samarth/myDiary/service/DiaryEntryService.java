@@ -4,8 +4,8 @@ import com.samarth.myDiary.entity.DiaryEntry;
 import com.samarth.myDiary.entity.User;
 import com.samarth.myDiary.repository.DiaryEntryRepo;
 import org.bson.types.ObjectId;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +21,9 @@ public class DiaryEntryService {
     private DiaryEntryRepo diaryEntryRepo;
 
     @Autowired
+    private SentimentAnalysisService sentimentAnalysisService;
+
+    @Autowired
     private UserService userService;
 
 //    private static final Logger logger = LoggerFactory.getLogger(DiaryEntryService.class);
@@ -30,6 +33,9 @@ public class DiaryEntryService {
         try {
             User myUser = userService.findByUsername(username);
             diaryEntry.setDate(LocalDateTime.now());
+            String sentiment = sentimentAnalysisService.classifyText(diaryEntry.getContent());
+            diaryEntry.setSentiment(sentiment);
+
             DiaryEntry saved = diaryEntryRepo.save(diaryEntry);
             myUser.getDiaryEntries().add(saved);
             userService.saveUser(myUser);
@@ -39,6 +45,8 @@ public class DiaryEntryService {
     }
 
     public void saveEntry(DiaryEntry diaryEntry){
+        String sentiment = sentimentAnalysisService.classifyText(diaryEntry.getContent());
+        diaryEntry.setSentiment(sentiment);
         diaryEntryRepo.save(diaryEntry);
     }
 

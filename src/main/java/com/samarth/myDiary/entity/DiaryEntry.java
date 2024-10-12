@@ -1,6 +1,5 @@
 package com.samarth.myDiary.entity;
 
-import com.samarth.myDiary.enums.Sentiment;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
@@ -19,5 +18,5 @@ public class DiaryEntry {
     private String title;
     private String content;
     private LocalDateTime date;
-    private Sentiment sentiment;
+    private String sentiment;
 }

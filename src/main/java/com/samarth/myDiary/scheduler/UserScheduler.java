@@ -3,7 +3,6 @@ package com.samarth.myDiary.scheduler;
 import com.samarth.myDiary.cache.AppCache;
 import com.samarth.myDiary.entity.DiaryEntry;
 import com.samarth.myDiary.entity.User;
-import com.samarth.myDiary.enums.Sentiment;
 import com.samarth.myDiary.repository.UserRepoImpl;
 import com.samarth.myDiary.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,16 +32,16 @@ public class UserScheduler {
         List<User> users= userRepo.getUserForSA();
         for(User user:users){
             List<DiaryEntry> diaryEntries = user.getDiaryEntries();
-            List<Sentiment> sentiments = diaryEntries.stream().filter(x -> x.getDate().isAfter(LocalDateTime.now().minusDays(7))).map(x->x.getSentiment()).collect(Collectors.toList());
-            Map<Sentiment,Integer> sentimentCounts = new HashMap<>();
-            for(Sentiment sentiment:sentiments){
+            List<String> sentiments = diaryEntries.stream().filter(x -> x.getDate().isAfter(LocalDateTime.now().minusDays(7))).map(x->x.getSentiment()).collect(Collectors.toList());
+            Map<String,Integer> sentimentCounts = new HashMap<>();
+            for(String sentiment:sentiments){
                 if(sentiment!=null) {
                     sentimentCounts.put(sentiment, sentimentCounts.getOrDefault(sentiment, 0) + 1);
                 }
             }
-            Sentiment maxSentiment = null;
+            String maxSentiment = null;
             int maxCount=0;
-            for(Map.Entry<Sentiment,Integer> entry: sentimentCounts.entrySet()){
+            for(Map.Entry<String,Integer> entry: sentimentCounts.entrySet()){
                 if(entry.getValue()>maxCount){
                     maxCount= entry.getValue();
                     maxSentiment = entry.getKey();
